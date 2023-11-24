@@ -43,6 +43,10 @@ td:focus-within {
   border: 1px solid blue;
 }
 
+tfoot {
+  font-family: none;
+}
+
 input {
   width: 100%;
   padding: 0;
@@ -52,4 +56,17 @@ input {
 
 input:focus {
   outline: none;
+}
+
+.row-enter {
+  transform: translateX(-100%);
+  opacity: 0;
+}
+
+.row-enter-active {
+  transform: translateX(0);
+  opacity: 1;
+  transition:
+    transform 500ms,
+    opacity 500ms;
 }
