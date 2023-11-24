@@ -1,11 +1,10 @@
 import { produce } from 'immer';
 import { atom, getDefaultStore } from 'jotai';
+import { DEFAULT_THEME } from './theme';
 
 /**
  * Constants
  */
-const DEFAULT_ROW_NUM = 6;
-const DEFAULT_COL_NUM = 4;
 
 const MAX_ROW_NUM = 12;
 const MAX_COL_NUM = 6;
@@ -15,18 +14,14 @@ const TOUCH_MOVE_THRESHOLD = 150;
 /**
  * States
  */
-export const j_rows = atom<string[]>(
-  new Array(DEFAULT_ROW_NUM).fill(null).map((_, index) => `得分${index + 1}`),
-);
-export const j_cols = atom<string[]>(
-  new Array(DEFAULT_COL_NUM).fill(null).map((_, index) => `玩家${index + 1}`),
-);
+export const j_rows = atom<string[]>(DEFAULT_THEME.rows);
+export const j_cols = atom<string[]>(DEFAULT_THEME.cols);
 
 export const j_scores = atom<number[][]>(
-  new Array(DEFAULT_ROW_NUM)
-    .fill(null)
-    .map(() => new Array(DEFAULT_COL_NUM).fill(null).map(() => 0)),
+  createScores(DEFAULT_THEME.rows.length, DEFAULT_THEME.cols.length),
 );
+
+export const j_dialog_show = atom(false);
 
 /**
  * Mutations
@@ -194,6 +189,12 @@ export function onTouchEnd() {
 /**
  * Utils
  */
+export function createScores(row: number, col: number) {
+  return new Array(row)
+    .fill(null)
+    .map(() => new Array(col).fill(null).map(() => 0));
+}
+
 export function removePreZero(s: string): string {
   return s.replace(/^(?!0$)0*([1-9][0-9]*)$/, '$1');
 }
