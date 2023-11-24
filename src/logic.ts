@@ -7,7 +7,7 @@ import { atom, getDefaultStore } from 'jotai';
 const DEFAULT_ROW_NUM = 6;
 const DEFAULT_COL_NUM = 4;
 
-const MAX_ROW_NUM = 16;
+const MAX_ROW_NUM = 12;
 const MAX_COL_NUM = 6;
 
 const TOUCH_MOVE_THRESHOLD = 150;
@@ -64,6 +64,7 @@ export function addRow() {
   const col = store.get(j_cols).length;
 
   if (row === MAX_ROW_NUM) {
+    window.bgt?.toast(`最多${MAX_ROW_NUM}行`);
     return;
   }
 
@@ -85,6 +86,7 @@ export function removeRow() {
   const row = store.get(j_rows).length;
 
   if (row === 1) {
+    window.bgt?.toast(`不能再少啦`);
     return;
   }
 
@@ -106,6 +108,7 @@ export function addCol() {
   const col = store.get(j_cols).length;
 
   if (col === MAX_COL_NUM) {
+    window.bgt?.toast(`最多${MAX_COL_NUM}列`);
     return;
   }
 
@@ -127,6 +130,7 @@ export function removeCol() {
   const col = store.get(j_cols).length;
 
   if (col === 1) {
+    window.bgt?.toast(`不能再少啦`);
     return;
   }
 
