@@ -2,7 +2,6 @@ import { useAtom, useAtomValue } from 'jotai';
 import './App.css';
 import {
   j_cols,
-  j_dialog_show,
   j_rows,
   j_scores,
   onTouchEnd,
@@ -14,17 +13,21 @@ import {
   updateScore,
 } from './modules';
 import { useEffect } from 'react';
+import Operation from './components/Operation';
 import {
-  DEFAULT_THEME,
-  GREAT_WESTERN_TRAIL_THEME,
-  setTheme,
-} from './modules/theme';
+  j_dialog_show,
+  j_dialog_content,
+  showDialog,
+  j_dialog_cancelable,
+} from './modules/dialog';
 
 function App() {
   const rows = useAtomValue(j_rows);
   const cols = useAtomValue(j_cols);
   const scores = useAtomValue(j_scores);
   const [show, setShow] = useAtom(j_dialog_show);
+  const content = useAtomValue(j_dialog_content);
+  const cancelable = useAtomValue(j_dialog_cancelable);
 
   useEffect(() => {
     document.addEventListener('touchstart', onTouchStart);
@@ -40,10 +43,10 @@ function App() {
 
   return (
     <>
-      <table>
+      <table id="scorer">
         <thead>
           <tr>
-            <td className="more" onClick={() => setShow(true)}>
+            <td className="more" onClick={() => showDialog(<Operation />)}>
               <svg
                 viewBox="0 0 1024 1024"
                 version="1.1"
@@ -87,43 +90,18 @@ function App() {
           </tr>
         </tfoot>
       </table>
+
       <div
         className={'modal ' + (show ? 'modal__show' : 'modal__hide')}
-        onClick={() => setShow(false)}
+        onClick={() => {
+          if (cancelable) setShow(false);
+        }}
+        onTouchStart={(e) => e.stopPropagation()}
+        onTouchMove={(e) => e.stopPropagation()}
+        onTouchEnd={(e) => e.stopPropagation()}
       >
         <div className="dialog" onClick={(e) => e.stopPropagation()}>
-          <div className="dialog__block">
-            <h1>使用模板</h1>
-            <div>
-              <button
-                onClick={() => {
-                  setTheme(DEFAULT_THEME);
-                  setShow(false);
-                }}
-              >
-                默认
-              </button>
-              <button
-                onClick={() => {
-                  setTheme(GREAT_WESTERN_TRAIL_THEME);
-                  setShow(false);
-                }}
-              >
-                大西部之路
-              </button>
-            </div>
-          </div>
-          <div className="dialog__block">
-            <h1>导出截图</h1>
-            <span
-              style={{
-                fontSize: 14,
-                color: 'rgba(0, 0, 0, 0.6)',
-              }}
-            >
-              功能开发中，敬请期待
-            </span>
-          </div>
+          {content}
         </div>
       </div>
     </>

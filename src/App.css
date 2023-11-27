@@ -67,6 +67,8 @@ input {
   border: none;
   text-align: center;
   background: transparent;
+  height: 20px;
+  line-height: 20px;
 }
 input:focus {
   outline: none;
@@ -108,27 +110,4 @@ svg {
   padding: 24px;
   background-color: #fff;
   border-radius: 8px;
-}
-.dialog .dialog__block:not(:last-child) {
-  margin-bottom: 24px;
-}
-.dialog__block h1 {
-  font-size: 20px;
-  height: 24px;
-  line-height: 24px;
-  margin-block-start: 0;
-  margin-block-end: 8px;
-}
-
-button {
-  background-color: transparent;
-  border: 1px solid #333;
-  border-radius: 4px;
-  padding: 8px 16px;
-}
-button:active {
-  background-color: #eee;
-}
-button + button {
-  margin-left: 12px;
 }

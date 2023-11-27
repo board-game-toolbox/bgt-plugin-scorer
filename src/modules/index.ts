@@ -21,8 +21,6 @@ export const j_scores = atom<number[][]>(
   createScores(DEFAULT_THEME.rows.length, DEFAULT_THEME.cols.length),
 );
 
-export const j_dialog_show = atom(false);
-
 /**
  * Mutations
  */
